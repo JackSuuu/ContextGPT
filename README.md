@@ -29,6 +29,12 @@ Then open streamlit by using:
 
 `streamlit run Hello.py`
 
+## why still needs specialised AI agent when LLM like `chatgpt` and `deekseek` already exist?
+
+1. Customisation for Specific Use Cases: LLM are **general-purpose** and may not be optimised for **specific workflows**
+2. Efficiency & Cost Savings: specialised AI agents only focus on relevant inputs
+3. Better Context Management: this is the most crucial point, in a general purpose LLM, since it remembers you previous questions, it will use those context as part of its computation
+
 
 ## Tech stack
 
