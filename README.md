@@ -1,6 +1,9 @@
 # A custom GPT assistant that enhanced your personal context
 
-The purpose of this tool is to help university student revise their exam, learning new materials, by feeding the course resources such us Textbook, Tutorial sheet, course slides etc.
+The purpose of this tool is to help university student revise their exam, 
+learning new materials, by feeding the course resources such us Textbook, Tutorial sheet, course slides etc.
+This AI agent utilized the strong semantic reasoning power that `deepseek-r1` provided,
+which is great for any materials that related to logic and semantic reasoning.
 
 **Homepage**
 

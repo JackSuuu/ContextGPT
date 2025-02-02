@@ -7,17 +7,25 @@ from langchain.chains import RetrievalQA
 from langchain.chains.question_answering import load_qa_chain
 import time
 
+# Disable tokenizers parallelism warning
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
+
 # Load environment variables from .env file - api key
 load_dotenv(dotenv_path='.env')
 api_key = os.getenv("API_KEY")
+
 # Initalize SentenceTransformer model for embeddings
 embedding_function = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
+
 # Initalize Chroma vector store for document embeddings
 # and create retriever from the vector store
+# ! could cause problem
 vectordb = Chroma(persist_directory="docs/chroma_db", embedding_function=embedding_function)
 retriever = vectordb.as_retriever()
+
 # Initalize OpenAI language model with temperature parameter
-llm = ChatOpenAI(api_key=api_key, temperature = 0.9, model='deepseek-reasoner', base_url="https://api.deepseek.com/v1")
+llm = ChatOpenAI(api_key=api_key, temperature=0.9, model='deepseek-reasoner', base_url="https://api.deepseek.com/v1")
+
 # Create a retrieval-based question-answering (QA) chain
 # based on a [redefined] chain type "stuff"
 qa_chain = RetrievalQA.from_chain_type(llm=llm,
@@ -25,10 +33,12 @@ qa_chain = RetrievalQA.from_chain_type(llm=llm,
                                        retriever=retriever,
                                        return_source_documents=True,
                                        verbose=False)
+
+# ! print out to check any JSON output
 # Function to generate output based on query
 def make_output(query):
-    # Query the QA chain and extract the result
-    answer = qa_chain(query)
+    # Query the QA chain and extract the result using invoke method
+    answer = qa_chain.invoke(query)
     result = answer["result"]
     return result
 
@@ -39,5 +49,5 @@ def modify_output(input):
         # Yield the word in the input string
         yield text + " "
         time.sleep(0.05)
-    
+
 
