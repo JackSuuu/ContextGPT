@@ -1,16 +1,18 @@
 import os
 import streamlit as st
 from pdf_parsing import process_pdf  # Import the PDF processing function
+import time
 
 # Set page configuration including title and icon
 st.set_page_config(page_title="UniGPT", page_icon="🎓", layout="wide")
+
 
 # Initialize dark mode state
 if "dark_mode" not in st.session_state:
     st.session_state.dark_mode = False
 
 # Dark mode toggle button
-if st.button("Toggle Dark Mode"):
+if st.button("Toggle Dark/Light Mode"):
     st.session_state.dark_mode = not st.session_state.dark_mode
 
 # Apply styles based on dark mode state
@@ -30,7 +32,7 @@ if st.session_state.dark_mode:
         }
         .stButton > button {
             background-color: #bb86fc !important;
-            color: #121212 !important;
+            color: #fff !important;
             border-radius: 12px;
             font-weight: bold;
             padding: 8px 16px;
@@ -164,7 +166,21 @@ if uploaded_file is not None:
             f.write(uploaded_file.read())
         st.write("Processing the PDF file...")
         try:
-            summary = process_pdf(temp_pdf_path)
+            # Create a progress bar and spinner
+            progress_bar = st.progress(0)
+            with st.spinner("Processing PDF..."):
+                # Simulate inital progress update
+                progress_bar.progress(20)
+                time.sleep(0.2)
+                # Call the processing function - might take time
+                summary = process_pdf(temp_pdf_path)
+                # Update progress to near completion
+                progress_bar.progress(80)
+                time.sleep(0.2)  # Optional delay for visual effect
+
+                # Final the progress bar to 100%
+                progress_bar.progress(100)
+
             st.subheader("Summary")
             st.write(summary)
         except Exception as e:

@@ -11,7 +11,7 @@ which is great for any materials that related to logic and semantic reasoning.
 
 **chat section**
 
-![](media/char.png)
+![](media/chat_page.png)
 
 ## Features supported
 
