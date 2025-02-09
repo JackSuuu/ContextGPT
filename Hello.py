@@ -1,4 +1,6 @@
+import os
 import streamlit as st
+from pdf_parsing import process_pdf  # Import the PDF processing function
 
 # Set page configuration including title and icon
 st.set_page_config(page_title="UniGPT", page_icon="🎓", layout="wide")
@@ -22,14 +24,10 @@ if st.session_state.dark_mode:
             color: #e0e0e0 !important;
             transition: background-color 0.5s ease, color 0.5s ease;
         }
-
-        /* Header and text styling */
         h1, h2, h3, h4, h5, h6 {
             color: #bb86fc !important;
             transition: color 0.5s ease;
         }
-
-        /* Buttons */
         .stButton > button {
             background-color: #bb86fc !important;
             color: #121212 !important;
@@ -41,24 +39,18 @@ if st.session_state.dark_mode:
         .stButton > button:hover {
             background-color: #3700b3 !important;
         }
-
-        /* File uploader */
         .stFileUploader > div > button {
             background-color: #bb86fc !important;
             color: #121212 !important;
             border-radius: 12px;
             font-weight: bold;
         }
-
-        /* Footer */
         footer {
             background-color: #1e1e1e;
             color: #bb86fc;
             padding: 10px;
             border-radius: 8px;
         }
-
-        /* Navigation bar */
         .css-1v3fvcr {
             background-color: #1e1e1e !important;
             color: #bb86fc !important;
@@ -71,20 +63,15 @@ else:
     st.markdown(
         """
         <style>
-        /* General app styles */
         .stApp {
             background-color: #f7f7f7 !important;
             color: #333 !important;
             transition: background-color 0.5s ease, color 0.5s ease;
         }
-
-        /* Header and text styling */
         h1, h2, h3, h4, h5, h6 {
             color: #6a1b9a !important;
             transition: color 0.5s ease;
         }
-
-        /* Buttons */
         .stButton > button {
             background-color: #6a1b9a !important;
             color: #fff !important;
@@ -96,29 +83,24 @@ else:
         .stButton > button:hover {
             background-color: #4a148c !important;
         }
-
-        /* File uploader */
         .stFileUploader > div > button {
             background-color: #6a1b9a !important;
             color: #fff !important;
             border-radius: 12px;
             font-weight: bold;
         }
-
-        /* Footer */
         footer {
             background-color: #f3e5f5;
             color: #6a1b9a;
             padding: 10px;
             border-radius: 8px;
         }
-
         </style>
         """,
         unsafe_allow_html=True,
     )
 
-# Center the main content with animation
+# Header section
 st.markdown(
     """
     <div style="text-align: center; margin-top: 20px; animation: fadeIn 2s;">
@@ -162,7 +144,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# Center the file uploader with animation
+# File uploader section
 st.markdown(
     """
     <div style="text-align: center; margin: 20px; animation: fadeIn 2s;">
@@ -174,11 +156,29 @@ st.markdown(
 uploaded_file = st.file_uploader("", type=["pdf", "docx", "txt"], label_visibility="collapsed")
 if uploaded_file is not None:
     st.success(f"✅ Uploaded: {uploaded_file.name}")
+    
+    # Process PDF files using process_pdf function
+    if uploaded_file.name.lower().endswith(".pdf"):
+        temp_pdf_path = "temp.pdf"
+        with open(temp_pdf_path, "wb") as f:
+            f.write(uploaded_file.read())
+        st.write("Processing the PDF file...")
+        try:
+            summary = process_pdf(temp_pdf_path)
+            st.subheader("Summary")
+            st.write(summary)
+        except Exception as e:
+            st.error(f"Error processing PDF: {e}")
+        finally:
+            if os.path.exists(temp_pdf_path):
+                os.remove(temp_pdf_path)
+    else:
+        st.info("Currently, only PDF files are processed for summarization.")
 
 # Display a banner image with animation
 st.image("assets/banner.png", use_container_width=True, caption="Your AI-powered assistant.")
 
-# Footer with animation
+# Footer section
 st.markdown(
     """
     <hr>

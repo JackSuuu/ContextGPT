@@ -25,7 +25,11 @@ To install or libraries required, run:
 
 `pip install -r requirement.txt`
 
-Then open streamlit by using:
+Then install Ollama deepseek model locally
+
+`Ollama pull deepseek-r1:1.5b`
+
+Finally open streamlit by using:
 
 `streamlit run Hello.py`
 
