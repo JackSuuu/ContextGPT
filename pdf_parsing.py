@@ -1,15 +1,18 @@
 import os
 import json
 import logging
+import shutil
 
+from dotenv import load_dotenv
 import streamlit as st
 from PyPDF2 import PdfReader
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.vectorstores import Chroma
 from langchain.embeddings.sentence_transformer import SentenceTransformerEmbeddings
-from langchain_community.llms import Ollama
 from langchain.chains import RetrievalQA
-import shutil
+# Removed Ollama import
+from langchain.chat_models import ChatOpenAI  # Import ChatOpenAI for Groq
+
 import chromadb.api.client
 
 # Set up logging to the console
@@ -91,12 +94,21 @@ def process_pdf(pdf_file_path: str) -> str:
         logger.error("Error reloading vectorstore: %s", e)
         raise e
 
-    # --- Initialize the LLM and QA chain ---
+    # --- Initialize the LLM and QA chain using Groq model ---
     try:
-        llm = Ollama(model="deepseek-r1:1.5b")
-        logger.info("Initialized Ollama LLM.")
+        # Set up Groq API environment variables
+        load_dotenv()
+        api_key = os.getenv("GROQ_API_KEY")
+        if api_key:
+            os.environ["OPENAI_API_KEY"] = api_key
+            os.environ["OPENAI_API_BASE"] = "https://api.groq.com/openai/v1"
+            print(api_key)
+        else:
+            raise ValueError("OPENAI_API_KEY not found in the .env file")
+        llm = ChatOpenAI(model_name="llama-3.3-70b-versatile", temperature=0.7)
+        logger.info("Initialized Groq LLM using ChatOpenAI.")
     except Exception as e:
-        logger.error("Error initializing Ollama LLM: %s", e)
+        logger.error("Error initializing Groq LLM: %s", e)
         raise e
     
     try:

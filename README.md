@@ -50,6 +50,7 @@ Finally open streamlit by using:
 - python-multipart
 - cohere
 - openai
+- Ollama
 - transformers
 - huggingface-hub
 - chromadb
