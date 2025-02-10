@@ -13,4 +13,4 @@ sentence-transformers
 PyPDF2
 ollama
 langchain_community
-sqlite3 >= 3.35.0
+sqlite3
