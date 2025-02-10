@@ -12,3 +12,4 @@ chromadb
 sentence-transformers
 PyPDF2
 ollama
+langchain_community
