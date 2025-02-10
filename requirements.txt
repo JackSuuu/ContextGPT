@@ -13,4 +13,4 @@ sentence-transformers
 PyPDF2
 ollama
 langchain_community
-sqlite3
+pysqlite3-binary
