@@ -1,0 +1,246 @@
+/* Global Styles */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+
+body {
+  background-color: #2d1e40;
+  color: white;
+  font-family: var(--font-geist-sans), sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.container {
+  width: 80%;
+  height: 85vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #3a2566;
+  border-radius: 15px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3);
+  padding: 24px;
+}
+
+.chatbox {
+  flex-grow: 1;
+  border-radius: 10px;
+  box-shadow: inset 0px 4px 10px rgba(0, 0, 0, 0.2);
+  padding: 18px;
+  height: 100%;
+  overflow-y: auto;
+  margin-bottom: 18px;
+  background-color: #4b2d7f;
+  border: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.input-container {
+  border: 2px solid #c98aff;
+  background-color: #4b2d7f;
+  padding: 10px 15px;
+  border-radius: 10px;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+/* Custom File Upload Button - Improved Style */
+.file-upload label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #a874e3, #8a4be3);
+  color: white;
+  padding: 16px 24px;
+  margin-top: 7px;
+  margin-bottom: 10px;
+  border-radius: 30px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  border: none;
+  outline: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.file-upload-label:hover {
+  background: linear-gradient(135deg, #c98aff, #a874e3);
+  transform: translateY(-2px);
+}
+
+.file-upload-label:active {
+  transform: translateY(0);
+}
+
+.file-upload-label i {
+  font-size: 17px;
+}
+
+/* Chat Messages */
+.user-message, .bot-message {
+  max-width: 75%;
+  padding: 14px;
+  margin: 12px 0;
+  border-radius: 18px;
+  font-size: 15px;
+  word-wrap: break-word;
+  line-height: 1.6;
+}
+
+.user-message {
+  background-color: #8a4be3;
+  color: white;
+  align-self: flex-end;
+}
+
+.bot-message {
+  background-color: #b18ae0;
+  color: #2d1e40;
+  align-self: flex-start;
+  white-space: pre-wrap;
+  line-height: 1.6;
+}
+
+/* Enhance markdown rendering */
+.bot-message p {
+  margin: 0 0;
+}
+
+.bot-message pre {
+  background: #1a1a1a;
+  padding: 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+
+.bot-message code {
+  font-family: 'Fira Code', monospace;
+  background: #2d1e40;
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  color: #c98aff;
+}
+
+/* Markdown Styling */
+pre {
+  background: #1a1a1a;
+  padding: 1rem;
+  border-radius: 6px;
+  overflow-x: auto;
+  font-family: 'Fira Code', monospace;
+  color: #e0e0e0;
+}
+
+code {
+  background: #f0f0f0;
+  padding: 0.3em 0.5em;
+  border-radius: 4px;
+  font-family: 'Fira Code', monospace;
+  color: #333;
+}
+
+table {
+  border-collapse: collapse;
+  margin: 1rem 0;
+  width: 100%;
+}
+
+table td, table th {
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+
+blockquote {
+  border-left: 4px solid #ddd;
+  margin: 1rem 0;
+  padding-left: 1.2rem;
+  color: #ccc;
+  font-style: italic;
+}
+
+/* Input & Button Styling */
+form {
+  display: flex;
+  gap: 12px;
+  padding: 10px 0;
+}
+
+input {
+  flex-grow: 1;
+  padding: 14px;
+  border: 1px solid #a874e3;
+  border-radius: 25px;
+  outline: none;
+  font-size: 15px;
+  background-color: #54357b;
+  color: white;
+  transition: 0.3s ease-in-out;
+}
+
+input:focus {
+  border-color: #c98aff;
+  box-shadow: 0px 0px 10px rgba(201, 138, 255, 0.8);
+}
+
+button {
+  padding: 14px 20px;
+  border: none;
+  background-color: #a874e3;
+  color: white;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+button:hover {
+  background-color: #c98aff;
+}
+
+.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.file-upload label {
+  transition: opacity 0.2s ease;
+}
+
+.message.bot-message {
+  white-space: pre-wrap;
+}
+
+.input-container button[disabled] {
+  background-color: #6d4a9e !important;
+  cursor: not-allowed;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-spinner {
+  animation: spin 1s linear infinite;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  margin-left: 8px;
+}
+
+.upload-status {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  background: #4b2d7f;
+  border-radius: 8px;
+  margin-top: 8px;
+  font-size: 0.9em;
+}

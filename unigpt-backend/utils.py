@@ -1,5 +1,6 @@
 import os
 import time
+import re
 from dotenv import load_dotenv
 from langchain_community.llms import Ollama
 from langchain.chat_models import ChatOpenAI
@@ -50,7 +51,7 @@ qa_chain_groq = RetrievalQA.from_chain_type(
 
 # Function to generate output based on query.
 # Set use_groq=True to use the Groq model; otherwise, the Ollama model will be used.
-def make_output(query, use_groq=True):
+def make_output(query, use_groq=False):
     if use_groq:
         answer = qa_chain_groq.invoke(query)
         print("Using groq chain")
@@ -62,13 +63,24 @@ def make_output(query, use_groq=True):
 
 # Function to modify the output by adding spaces between each word with a delay
 def modify_output(input_text):
-    for text in input_text.split():
-        yield text + " "
+    # Split text into words and preserve newlines
+    tokens = re.split(r'(\s+)', input_text)  # Split on whitespace but keep separators
+    for token in tokens:
+        if not token.strip():  # Skip empty tokens
+            continue
+        if '\n' in token:
+            # Split newlines into separate chunks
+            for part in token.split('\n'):
+                if part:
+                    yield part + ' '
+                yield '\n'
+        else:
+            yield token + ' '
         time.sleep(0.05)
 
 # Example usage (optional test)
 if __name__ == "__main__":
     query = "Explain LangChain in simple terms."
     # Toggle between models by setting use_groq to True or False
-    response = make_output(query, use_groq=True)
+    response = make_output(query, use_groq=False)
     print("Response:", response)

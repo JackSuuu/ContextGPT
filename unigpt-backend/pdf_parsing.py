@@ -61,6 +61,8 @@ def process_pdf(pdf_file_path: str) -> str:
     
     # Clear the system cache to refresh the database content.
     try:
+        chroma_client = chromadb.PersistentClient(path="./chroma_db")
+        chroma_client.reset()  # This will clear the database
         chromadb.api.client.SharedSystemClient.clear_system_cache()
         persist_directory = "docs/chroma_db"
         if os.path.exists(persist_directory):
