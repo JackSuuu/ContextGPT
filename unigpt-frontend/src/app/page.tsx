@@ -6,6 +6,18 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeHighlight from 'rehype-highlight';
 import 'highlight.js/styles/github-dark.css';
+import { FiGithub } from 'react-icons/fi';
+import { FaFileUpload } from "react-icons/fa";
+import { IoSend } from "react-icons/io5";
+import { IoMdCloseCircle } from "react-icons/io";
+import { FaHeart } from "react-icons/fa";
+import { FaFilePdf } from "react-icons/fa";
+import { FaRocketchat } from "react-icons/fa";
+import { FaHistory } from "react-icons/fa";
+import { IoIosSettings } from "react-icons/io";
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+
 
 interface Message {
   content: string;
@@ -13,12 +25,21 @@ interface Message {
 }
 
 export default function Home() {
+  // Add this inside your component
+  const router = useRouter();
+
   const [query, setQuery] = useState('');
   const [file, setFile] = useState<File | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [isUploading, setIsUploading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const simulationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  // Add toggle function for sidebar
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
 
   // Scroll to bottom on new messages
   useEffect(() => {
@@ -117,6 +138,12 @@ export default function Home() {
           }
         }
       );
+
+     // Store summary in localStorage
+      localStorage.setItem('latestSummary', JSON.stringify({
+        content: response.data.summary,
+        filename: selectedFile.name
+      }));
   
       console.log('Upload successful:', response.data);
       setMessages(prev => [
@@ -143,7 +170,43 @@ export default function Home() {
 
   return (
     <div className="container">
-      <h1>🤖 UniGPT - context-based assistant</h1>
+      {/* Add Sidebar */}
+      <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
+        <nav>
+          <button className="close-button" onClick={toggleSidebar}>
+            <IoMdCloseCircle />
+          </button>
+          <ul>
+            <li><button
+                onClick={() => router.push('/summary')} // Link to summary page
+                disabled={!localStorage.getItem('latestSummary')}
+                className="summary-button"
+            ><FaFilePdf /> PDF Summary</button></li>
+            <li>
+              <button onClick={() => window.location.reload()}>
+              <FaRocketchat /> New Chat
+              </button>
+            </li>
+            <li><button><FaHistory /> History</button></li>
+            <li><button><IoIosSettings /> Settings</button></li>
+          </ul>
+          <p className='love-message'>Made with <FaHeart /> by unigpt team</p>
+          <Link href="https://github.com/yourusername/yourrepo" target="_blank" className="github-icon-menu">
+          <FiGithub size={24} />
+          </Link>
+        </nav>
+      </div>
+
+      <header>
+        <button className="menu-button" onClick={toggleSidebar}>
+          ☰
+        </button>
+        <h1>UniGPT</h1>
+        <p><b>context-based agent</b></p>
+        <Link href="https://github.com/yourusername/yourrepo" target="_blank" className="github-icon">
+          <FiGithub size={24} />
+        </Link>
+      </header>
 
       <div className="chatbox">
         {messages.map((msg, index) => (
@@ -182,7 +245,8 @@ export default function Home() {
             disabled={isUploading}
           />
           <button type="submit" disabled={isUploading}>
-            {isUploading ? 'Processing...' : 'Send'}
+            {isUploading ? '...' : ''}
+            <IoSend style={{ position: "absolute", right: "12px", top: "16px"}} />
           </button>
         </form>
 
@@ -210,13 +274,14 @@ export default function Home() {
             disabled={isUploading}
           />
           <label htmlFor="file-upload" className={isUploading ? 'disabled' : ''}>
+            <FaFileUpload />
             {isUploading ? (
               <div className="upload-status">
                 Processing PDF...
                 <div className="loading-spinner"></div>
               </div>
             ) : (
-              `📁 ${file ? file.name : "Upload PDF document"}`
+              `${file ? file.name : "Upload PDF document"}`
             )}
           </label>
         </div>
