@@ -51,7 +51,7 @@ qa_chain_groq = RetrievalQA.from_chain_type(
 
 # Function to generate output based on query.
 # Set use_groq=True to use the Groq model; otherwise, the Ollama model will be used.
-def make_output(query, use_groq=False):
+def make_output(query, use_groq=True):
     if use_groq:
         answer = qa_chain_groq.invoke(query)
         print("Using groq chain")
@@ -82,5 +82,5 @@ def modify_output(input_text):
 if __name__ == "__main__":
     query = "Explain LangChain in simple terms."
     # Toggle between models by setting use_groq to True or False
-    response = make_output(query, use_groq=False)
+    response = make_output(query, use_groq=True)
     print("Response:", response)

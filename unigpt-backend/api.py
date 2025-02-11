@@ -14,7 +14,8 @@ app = FastAPI()
 # Allow cross-origin requests from Next.js
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # Update with your frontend URL
+    # allow_origins=["http://localhost:3000"],  # Update with your frontend URL
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -26,7 +27,7 @@ UPLOAD_DIR.mkdir(exist_ok=True)
 class PDFResponse(BaseModel):
     summary: str
 
-@app.post("/upload_pdf/", response_model=PDFResponse)
+@app.post("/api/upload_pdf/", response_model=PDFResponse)
 async def upload_pdf(file: UploadFile = File(...)):
     # Validate file type
     if file.content_type != "application/pdf":
@@ -64,7 +65,7 @@ class QueryRequest(BaseModel):
     query: str
     use_groq: bool = True
 
-@app.post("/generate_output/")
+@app.post("/api/generate_output/")
 async def generate_output(request: QueryRequest):
     try:
         response = make_output(request.query, request.use_groq)
@@ -72,7 +73,7 @@ async def generate_output(request: QueryRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.get("/generate_output_stream/")
+@app.get("/api/generate_output_stream/")
 async def generate_output_stream(query: str, use_groq: bool = True):
     def event_generator():
         # Use make_output to generate a response
@@ -83,3 +84,7 @@ async def generate_output_stream(query: str, use_groq: bool = True):
             yield f"{word} "
     
     return EventSourceResponse(event_generator())
+
+@app.get("/")
+def read_root():
+    return {"message": "FastAPI on Vercel"}

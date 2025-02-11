@@ -72,7 +72,7 @@ export default function Home() {
       }
   
       const response = await axios.post(
-        'http://localhost:8000/generate_output/',
+        'unigpt-backend/api/generate_output/',
         {
           query: userQuery,
           use_groq: true
@@ -130,7 +130,7 @@ export default function Home() {
   
     try {
       const response = await axios.post(
-        'http://localhost:8000/upload_pdf/', // Match backend endpoint
+        'unigpt-backend/api/upload_pdf/', // Match backend endpoint
         formData,
         {
           headers: { 
@@ -202,7 +202,7 @@ export default function Home() {
           ☰
         </button>
         <h1>UniGPT</h1>
-        <p><b>context-based agent</b></p>
+        <p><b>context-based AI agent</b></p>
         <Link href="https://github.com/yourusername/yourrepo" target="_blank" className="github-icon">
           <FiGithub size={24} />
         </Link>
@@ -241,7 +241,7 @@ export default function Home() {
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Type your question..."
+            placeholder="Message UniGPT..."
             disabled={isUploading}
           />
           <button type="submit" disabled={isUploading}>
