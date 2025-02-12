@@ -7,11 +7,7 @@ which is great for any materials that related to logic and semantic reasoning.
 
 **Homepage**
 
-![](media/homepage.png)
-
-**chat section**
-
-![](media/chat_page.png)
+![](media/chat.png)
 
 ## Features supported
 
