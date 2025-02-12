@@ -14,6 +14,5 @@ COPY . .
 # Expose the port that the app runs on
 EXPOSE 8080
 
-# Command to run the app with uvicorn
-CMD ["uvicorn", "api:app", "--host", "0.0.0.0", "--port", "8080"]
-
+# Use shell form to enable variable expansion
+CMD uvicorn api:app --host 0.0.0.0 --port $PORT
