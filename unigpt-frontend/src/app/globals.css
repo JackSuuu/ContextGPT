@@ -62,9 +62,21 @@ header h1 {
 @supports(padding: env(safe-area-inset-bottom)) {
   @media (max-width: 600px) {
     .input-container {
-      bottom: calc(30px + env(safe-area-inset-bottom));
+      bottom: calc(40px + env(safe-area-inset-bottom));
     }
   }
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  touch-action: manipulation;
+  overscroll-behavior: contain;
+}
+
+input,
+textarea,
+select {
+  font-size: 16px;
 }
 
 
