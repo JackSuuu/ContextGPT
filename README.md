@@ -19,6 +19,12 @@ which is great for any materials that related to logic and semantic reasoning.
 2. dedicate summary for the context
 3. chat within the pure context file
 
+## why still needs specialised AI agent when LLM like `chatgpt` and `deekseek` already exist?
+
+1. Customisation for Specific Use Cases: LLM are **general-purpose** and may not be optimised for **specific workflows**
+2. Efficiency & Cost Savings: specialised AI agents only focus on relevant inputs
+3. Better Context Management: this is the most crucial point, in a general purpose LLM, since it remembers you previous questions, it will use those context as part of its computation
+
 ## How to use
 
 To install or libraries required, run:
@@ -29,20 +35,26 @@ Then install Ollama deepseek model locally
 
 `Ollama pull deepseek-r1:1.5b`
 
-Finally open streamlit by using:
+Or using the GROQ api:
 
-`streamlit run Hello.py`
+`Fill in your api key in .env`
 
-## why still needs specialised AI agent when LLM like `chatgpt` and `deekseek` already exist?
+Finally unigpt-backend by using:
 
-1. Customisation for Specific Use Cases: LLM are **general-purpose** and may not be optimised for **specific workflows**
-2. Efficiency & Cost Savings: specialised AI agents only focus on relevant inputs
-3. Better Context Management: this is the most crucial point, in a general purpose LLM, since it remembers you previous questions, it will use those context as part of its computation
+`fastapi run api.py`
 
+and open unigpt-frontend run:
+
+`npm run dev`
+
+## Deployment services
+
+- backend(Google Cloud): https://console.cloud.google.com/cloud-build/builds;region=global/7a4a12d6-1f46-41a6-9c15-f838107a3d7b?inv=1&invt=AbpYpQ&project=balmy-platform-442016-d5
+- frontend(Vercel): vercel
 
 ## Tech stack
 
-- streamlit
+- next.js and fast api
 - typing-extensions
 - langchain
 - kaleido
