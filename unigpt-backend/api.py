@@ -7,6 +7,7 @@ from utils import make_output, modify_output  # Import the functions from utils.
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import HTTPException
 from pydantic import BaseModel
+import psutil
 
 app = FastAPI()
 
@@ -20,8 +21,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get("/memory")
+def get_memory_usage():
+    process = psutil.Process()
+    mem_info = process.memory_info()
+    return {"rss": mem_info.rss / (1024 * 1024), "vms": mem_info.vms / (1024 * 1024)}
+
 UPLOAD_DIR = Path("uploads")
-UPLOAD_DIR.mkdir(exist_ok=False)
+UPLOAD_DIR.mkdir(exist_ok=True)
 
 class PDFResponse(BaseModel):
     summary: str
