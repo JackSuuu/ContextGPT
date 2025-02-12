@@ -58,6 +58,16 @@ header h1 {
   border-radius: 10px;
 }
 
+
+@supports(padding: env(safe-area-inset-bottom)) {
+  @media (max-width: 600px) {
+    .input-container {
+      bottom: calc(30px + env(safe-area-inset-bottom));
+    }
+  }
+}
+
+
 input[type="file"] {
   display: none;
 }
