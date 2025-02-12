@@ -4,7 +4,6 @@ import shutil
 from pathlib import Path
 from pdf_parsing import process_pdf  # Import your existing function
 from utils import make_output, modify_output  # Import the functions from utils.py
-from sse_starlette.sse import EventSourceResponse  # Correct import for SSE
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import HTTPException
 from pydantic import BaseModel
@@ -22,7 +21,7 @@ app.add_middleware(
 )
 
 UPLOAD_DIR = Path("uploads")
-UPLOAD_DIR.mkdir(exist_ok=True)
+UPLOAD_DIR.mkdir(exist_ok=False)
 
 class PDFResponse(BaseModel):
     summary: str
@@ -72,18 +71,6 @@ async def generate_output(request: QueryRequest):
         return {"response": response}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-
-@app.get("/api/generate_output_stream/")
-async def generate_output_stream(query: str, use_groq: bool = True):
-    def event_generator():
-        # Use make_output to generate a response
-        response = make_output(query, use_groq)
-        
-        # Modify output by adding spaces with a delay (optional)
-        for word in modify_output(response):
-            yield f"{word} "
-    
-    return EventSourceResponse(event_generator())
 
 @app.get("/")
 def read_root():

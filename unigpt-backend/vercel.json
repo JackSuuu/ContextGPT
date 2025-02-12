@@ -3,7 +3,8 @@
     "builds": [
       {
         "src": "api.py",
-        "use": "@vercel/python"
+        "use": "@vercel/python",
+        "config": { "installCommand": "pip install --no-cache-dir -r requirements.txt" }
       }
     ],
     "routes": [
@@ -12,5 +13,5 @@
         "dest": "api.py"
       }
     ]
-}
+  }
   
