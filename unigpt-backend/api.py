@@ -28,6 +28,7 @@ app.add_middleware(
 #     mem_info = process.memory_info()
 #     return {"rss": mem_info.rss / (1024 * 1024), "vms": mem_info.vms / (1024 * 1024)}
 
+
 UPLOAD_DIR = Path("uploads")
 UPLOAD_DIR.mkdir(exist_ok=True)
 
