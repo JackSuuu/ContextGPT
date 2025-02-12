@@ -4,7 +4,6 @@ import logging
 import shutil
 
 from dotenv import load_dotenv
-import streamlit as st
 from PyPDF2 import PdfReader
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.vectorstores import Chroma

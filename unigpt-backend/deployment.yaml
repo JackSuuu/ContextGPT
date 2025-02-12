@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myfastapiapp
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: myfastapiapp
+  template:
+    metadata:
+      labels:
+        app: myfastapiapp
+    spec:
+      containers:
+      - name: myfastapiapp
+        image: jacksu621/myfastapiapp
+        ports:
+        - containerPort: 80
