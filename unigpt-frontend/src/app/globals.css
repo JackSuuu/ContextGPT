@@ -46,6 +46,7 @@ header h1 {
 }
 
 .container {
+  min-width: 300px;
   width: 47%;
   height: 85vh;
   display: flex;
@@ -55,6 +56,13 @@ header h1 {
   border-radius: 15px;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3);
   padding: 24px;
+  transition: all 0.3s ease;
+}
+
+@media (max-width: 1000px) {
+  .container {
+    width: 80%;
+  }
 }
 
 .chatbox {
@@ -412,7 +420,7 @@ button:hover {
   color: #c98aff;
 }
 
-@media (max-width: 400px) {
+@media (max-width: 500px) {
   .github-icon {
     display: none;
   }
