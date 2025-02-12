@@ -18,16 +18,13 @@ import { IoIosSettings } from "react-icons/io";
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-
 interface Message {
   content: string;
   type: 'user' | 'bot';
 }
 
 export default function Home() {
-  // Add this inside your component
   const router = useRouter();
-
   const [query, setQuery] = useState('');
   const [file, setFile] = useState<File | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -35,11 +32,13 @@ export default function Home() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const simulationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [hasSummary, setHasSummary] = useState(false); // New state for summary check
 
-  // Add toggle function for sidebar
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
+  // Check for summary on client side
+  useEffect(() => {
+    const summary = localStorage.getItem('latestSummary');
+    setHasSummary(!!summary);
+  }, []);
 
   // Scroll to bottom on new messages
   useEffect(() => {
@@ -53,11 +52,14 @@ export default function Home() {
     }
   }, []);
 
+  // Toggle sidebar
+  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
+
   const handleSendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const userQuery = query.trim();
     if (!userQuery) return;
-  
+
     setMessages(prev => [
       ...prev,
       { content: userQuery, type: 'user' },
@@ -65,27 +67,19 @@ export default function Home() {
     ]);
     
     setQuery('');
-  
+
     try {
-      if (simulationTimeoutRef.current) {
-        clearTimeout(simulationTimeoutRef.current);
-      }
-  
-      const response = await axios.post(
-        'unigpt-backend/api/generate_output/',
-        {
-          query: userQuery,
-          use_groq: true
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json'
-          }
+        if (simulationTimeoutRef.current) {
+            clearTimeout(simulationTimeoutRef.current);
         }
+
+      const response = await axios.post(
+        'https://unigpt-backend-git-79205187327.europe-west2.run.app/api/generate_output/',
+        { query: userQuery, use_groq: true },
+        { headers: { 'Content-Type': 'application/json' } }
       );
-  
-      const botResponse = response.data.response;
-      simulateStreamingResponse(botResponse);
+
+      simulateStreamingResponse(response.data.response);
     } catch (error) {
       handleApiError(error);
     }
@@ -98,7 +92,6 @@ export default function Home() {
         setMessages(prev => {
           const newMessages = [...prev];
           const lastMessage = newMessages[newMessages.length - 1];
-          
           return lastMessage?.type === 'bot' 
             ? [...prev.slice(0, -1), { ...lastMessage, content: botResponse.substring(0, i + 1) }]
             : prev;
@@ -123,29 +116,24 @@ export default function Home() {
 
   const handleFileUpload = async (selectedFile: File) => {
     if (!selectedFile) return;
-  
+
     setIsUploading(true);
     const formData = new FormData();
     formData.append('file', selectedFile);
-  
+
     try {
       const response = await axios.post(
-        'unigpt-backend/api/upload_pdf/', // Match backend endpoint
+        'https://unigpt-backend-git-79205187327.europe-west2.run.app/api/upload_pdf/',
         formData,
-        {
-          headers: { 
-            'Content-Type': 'multipart/form-data',
-          }
-        }
+        { headers: { 'Content-Type': 'multipart/form-data' } }
       );
 
-     // Store summary in localStorage
       localStorage.setItem('latestSummary', JSON.stringify({
         content: response.data.summary,
         filename: selectedFile.name
       }));
-  
-      console.log('Upload successful:', response.data);
+      setHasSummary(true);
+
       setMessages(prev => [
         ...prev,
         { 
@@ -170,29 +158,32 @@ export default function Home() {
 
   return (
     <div className="container">
-      {/* Add Sidebar */}
       <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
         <nav>
           <button className="close-button" onClick={toggleSidebar}>
             <IoMdCloseCircle />
           </button>
           <ul>
-            <li><button
-                onClick={() => router.push('/summary')} // Link to summary page
-                disabled={!localStorage.getItem('latestSummary')}
-                className="summary-button"
-            ><FaFilePdf /> PDF Summary</button></li>
             <li>
-              <button onClick={() => window.location.reload()}>
-              <FaRocketchat /> New Chat
+              <button
+                onClick={() => router.push('/summary')}
+                disabled={!hasSummary}
+                className="summary-button"
+              >
+                <FaFilePdf /> PDF Summary
+              </button>
+            </li>
+            <li>
+              <button onClick={() => router.push('/')}>
+                <FaRocketchat /> New Chat
               </button>
             </li>
             <li><button><FaHistory /> History</button></li>
             <li><button><IoIosSettings /> Settings</button></li>
           </ul>
           <p className='love-message'>Made with <FaHeart /> by unigpt team</p>
-          <Link href="https://github.com/yourusername/yourrepo" target="_blank" className="github-icon-menu">
-          <FiGithub size={24} />
+          <Link href="https://github.com/JackSuuu/UniGPT" target="_blank" className="github-icon-menu">
+            <FiGithub size={24} />
           </Link>
         </nav>
       </div>
@@ -203,7 +194,7 @@ export default function Home() {
         </button>
         <h1>UniGPT</h1>
         <p><b>context-based AI agent</b></p>
-        <Link href="https://github.com/yourusername/yourrepo" target="_blank" className="github-icon">
+        <Link href="https://github.com/JackSuuu/UniGPT" target="_blank" className="github-icon">
           <FiGithub size={24} />
         </Link>
       </header>
@@ -245,7 +236,6 @@ export default function Home() {
             disabled={isUploading}
           />
           <button type="submit" disabled={isUploading}>
-            {isUploading ? '...' : ''}
             <IoSend style={{ position: "absolute", right: "12px", top: "16px"}} />
           </button>
         </form>
@@ -256,18 +246,13 @@ export default function Home() {
             id="file-upload"
             onChange={(e) => {
               const selectedFile = e.target.files?.[0];
-              if (selectedFile) {
-                if (selectedFile.type === 'application/pdf') {
-                  handleFileUpload(selectedFile);
-                } else {
-                  setMessages(prev => [
-                    ...prev,
-                    { 
-                      content: '❌ Invalid file type. Please upload a PDF document.',
-                      type: 'bot' 
-                    }
-                  ]);
-                }
+              if (selectedFile?.type === 'application/pdf') {
+                handleFileUpload(selectedFile);
+              } else {
+                setMessages(prev => [...prev, {
+                  content: '❌ Invalid file type. Please upload a PDF document.',
+                  type: 'bot'
+                }]);
               }
             }}
             accept="application/pdf"
