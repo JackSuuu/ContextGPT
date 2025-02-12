@@ -229,7 +229,7 @@ input {
   border: 1px solid #a874e3;
   border-radius: 25px;
   outline: none;
-  font-size: 15px;
+  font-size: 16px;
   background-color: #54357b;
   color: white;
   transition: 0.3s ease-in-out;
@@ -248,7 +248,7 @@ button {
   color: white;
   border-radius: 25px;
   cursor: pointer;
-  font-size: 15px;
+  font-size: 16px;
   transition: background-color 0.3s ease-in-out;
 }
 
