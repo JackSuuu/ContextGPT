@@ -1,6 +1,28 @@
 /* Global Styles */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
 
+/* These are already correctly implemented in your CSS */
+html {
+  -webkit-text-size-adjust: 100%; /* Prevent font scaling */
+  touch-action: manipulation; /* Prevent double-tap zoom */
+}
+
+input, textarea, select {
+  font-size: 16px; /* Critical minimum font size to prevent zoom */
+}
+
+@media (pointer: coarse) {
+  input[type="text"],
+  input[type="search"],
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
+input:focus {
+  font-size: 16px; /* Ensures font size remains consistent on focus */
+}
+
 body {
   background-color: #2d1e40;
   color: white;
