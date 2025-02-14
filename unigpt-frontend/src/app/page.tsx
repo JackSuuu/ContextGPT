@@ -182,7 +182,7 @@ export default function Home() {
             <li><button><IoIosSettings /> Settings</button></li>
           </ul>
           <p className='love-message'>Made with <FaHeart /> by context-gpt team</p>
-          <Link href="https://github.com/JackSuuu/UniGPT" target="_blank" className="github-icon-menu">
+          <Link href="https://github.com/JackSuuu/ContextGPT" target="_blank" className="github-icon-menu">
             <FiGithub size={24} />
           </Link>
         </nav>
@@ -194,7 +194,7 @@ export default function Home() {
         </button>
         <h1>ContextGPT</h1>
         <p><b>context-based AI agent</b></p>
-        <Link href="https://github.com/JackSuuu/UniGPT" target="_blank" className="github-icon">
+        <Link href="https://github.com/JackSuuu/ContextGPT" target="_blank" className="github-icon">
           <FiGithub size={24} />
         </Link>
       </header>
@@ -232,7 +232,7 @@ export default function Home() {
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Message UniGPT..."
+            placeholder="Message ContextGPT..."
             disabled={isUploading}
           />
           <button type="submit" disabled={isUploading}>
