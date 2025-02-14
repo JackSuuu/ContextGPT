@@ -181,6 +181,15 @@
             text-decoration: none;
             color: inherit;
         }
+        .transition-link {
+        text-decoration: none;
+        }
+
+        /* Fade out effect */
+        .fade-out {
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
     </style>
 </head>
 <body>
@@ -205,7 +214,7 @@
             <div class="hero-content">
                 <h1>Unleash the Power of Context-Based AI</h1>
                 <p>ContextGPT revolutionizes human-AI interaction with context-baseed capabilities, deep contextual understanding, and adaptive learning.</p>
-                <button class="cta-button"><a href="https://context-gpt-jacksuuus-projects.vercel.app/">Get Started →</a></button>
+                <button class="cta-button"><a class="transition-link" href="https://context-gpt-jacksuuus-projects.vercel.app/">Get Started →</a></button>
             </div>
         </section>
 
@@ -298,6 +307,17 @@
         // Cleanup
         window.addEventListener('beforeunload', () => {
             window.removeEventListener('mousemove', handleMouseMove);
+        });
+
+
+        document.querySelectorAll('.transition-link').forEach(link => {
+            link.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.body.classList.add('fade-out');
+            setTimeout(() => {
+                window.location.href = this.href;
+            }, 500); // Match transition duration
+            });
         });
     </script>
 </body>
