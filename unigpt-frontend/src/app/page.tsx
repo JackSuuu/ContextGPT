@@ -181,7 +181,7 @@ export default function Home() {
             <li><button><FaHistory /> History</button></li>
             <li><button><IoIosSettings /> Settings</button></li>
           </ul>
-          <p className='love-message'>Made with <FaHeart /> by unigpt team</p>
+          <p className='love-message'>Made with <FaHeart /> by context-gpt team</p>
           <Link href="https://github.com/JackSuuu/UniGPT" target="_blank" className="github-icon-menu">
             <FiGithub size={24} />
           </Link>
@@ -192,7 +192,7 @@ export default function Home() {
         <button className="menu-button" onClick={toggleSidebar}>
           ☰
         </button>
-        <h1>UniGPT</h1>
+        <h1>ContextGPT</h1>
         <p><b>context-based AI agent</b></p>
         <Link href="https://github.com/JackSuuu/UniGPT" target="_blank" className="github-icon">
           <FiGithub size={24} />
