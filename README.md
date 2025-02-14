@@ -9,7 +9,7 @@ which is great for any materials that related to logic and semantic reasoning.
 
 ![](media/landing.png)
 
-![](media/chat.png)
+![](media/chat_2.png)
 
 ## Features supported
 
