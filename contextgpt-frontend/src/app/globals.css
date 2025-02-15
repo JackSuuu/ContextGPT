@@ -45,6 +45,13 @@ header h1 {
   margin-right: 20px;
 }
 
+@media (max-width: 700px) {
+  #heading-description {
+    display: none;
+  }
+}
+
+
 .container {
   min-width: 300px;
   width: 47%;

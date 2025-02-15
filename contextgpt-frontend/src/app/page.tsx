@@ -193,7 +193,7 @@ export default function Home() {
           ☰
         </button>
         <h1>ContextGPT</h1>
-        <p><b>context-based AI agent</b></p>
+        <p id="heading-description" ><b>context-based AI agent</b></p>
         <Link href="https://github.com/JackSuuu/ContextGPT" target="_blank" className="github-icon">
           <FiGithub size={24} />
         </Link>
