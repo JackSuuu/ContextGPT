@@ -5,6 +5,8 @@ learning new materials, by feeding the course resources such us Textbook, Tutori
 This AI agent utilized the strong semantic reasoning power that `deepseek-r1` provided,
 which is great for any materials that related to logic and semantic reasoning.
 
+## [LINK TO HOMEPAGE](https://context-gpt-landing-page.vercel.app/)
+
 **Homepage**
 
 ![](media/landing_new.png)
