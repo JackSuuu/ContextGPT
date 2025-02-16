@@ -47,8 +47,8 @@ and open unigpt-frontend run:
 
 ## Deployment services
 
-- backend(Google Cloud): https://console.cloud.google.com/cloud-build/builds;region=global/7a4a12d6-1f46-41a6-9c15-f838107a3d7b?inv=1&invt=AbpYpQ&project=balmy-platform-442016-d5
-- frontend(Vercel): vercel
+- backend: fastapi -> Google Cloud
+- frontend: Next.js -> Vercel
 
 ## Tech stack
 
