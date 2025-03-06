@@ -34,6 +34,21 @@ body {
   margin: 0;
 }
 
+p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+ol {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+pre {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
 header {
   display: flex;
   align-items: center;
@@ -171,8 +186,8 @@ input[type="file"] {
 }
 
 .bot-message {
-  background-color: #b18ae0;
-  color: #2d1e40;
+  background-color: #916ac1;
+  color: #e5e5e5;
   align-self: flex-start;
   white-space: pre-wrap;
   line-height: 1.6;
@@ -180,7 +195,6 @@ input[type="file"] {
 
 /* Enhance markdown rendering */
 .bot-message p {
-  margin: 0 0 1rem 0;
   line-height: 1.6;
 }
 
@@ -189,7 +203,6 @@ input[type="file"] {
   padding: 1rem 1.2rem;
   border-radius: 10px;
   overflow-x: auto;
-  margin: 1rem 0;
   box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -211,7 +224,6 @@ pre {
   font-family: 'Fira Code', monospace;
   color: #e0e0e0;
   line-height: 1.5;
-  margin: 1rem 0;
 }
 
 code {
@@ -224,7 +236,6 @@ code {
 
 table {
   border-collapse: collapse;
-  margin: 1rem 0;
   width: 100%;
 }
 
@@ -245,7 +256,6 @@ table td {
 
 blockquote {
   border-left: 4px solid #c98aff;
-  margin: 1rem 0;
   padding: 0.5rem 1rem;
   background-color: #3a2566;
   border-radius: 4px;
