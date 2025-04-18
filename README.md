@@ -1,9 +1,8 @@
 # A custom GPT assistant that enhanced your personal context
 
-The purpose of this tool is to help university student revise their exam, 
-learning new materials, by feeding the course resources such us Textbook, Tutorial sheet, course slides etc.
-This AI agent utilized the strong semantic reasoning power that `deepseek-r1` provided,
-which is great for any materials that related to logic and semantic reasoning.
+The purpose of this tool is to enhance LLM's understanding on personal customize content and learn from materials by feeding in course resources such as pdf, txt and markdown files.
+
+This AI agent utilizes the semantic reasoning capabilities of LLaMA3, and integrates LangChain along with a vector database to enhance contextual understanding across diverse learning materials.
 
 ## [LINK TO HOMEPAGE](https://context-gpt-landing-page.vercel.app/)
 
