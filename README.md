@@ -12,6 +12,11 @@ This AI agent utilizes the semantic reasoning capabilities of LLaMA3, and integr
 
 ![](media/chat_2.png)
 
+## [LINK TO BACKEND REPO](https://github.com/JackSuuu/contextGPT-backend)
+
+- Langchain Framework
+- Chroma Vector Database
+
 ## Features supported
 
 1. upload context file
